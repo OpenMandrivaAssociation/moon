@@ -13,7 +13,7 @@ Source0: %{name}-%{version}.tar.bz2
 Patch: moon-0.6-expat.patch
 License: LGPLv2
 Group: System/Libraries
-Url: http://www.go-mono.com/moonlight/
+Url: http://www.mono-project.com/Moonlight
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: ffmpeg-devel
 BuildRequires: libxtst-devel
@@ -26,7 +26,8 @@ BuildRequires: libmozilla-firefox-devel
 BuildRequires: libmagick-devel
 BuildRequires: dbus-glib-devel
 BuildRequires: libalsa-devel
-#BuildRequires: mono-devel ndesk-dbus rsvg-sharp
+#BuildRequires: mono-devel > 1.9.1
+#BuildRequires: ndesk-dbus gnome-desktop-sharp-devel
 
 %description
 Moonlight is an open source implementation of Microsoft Silverlight
