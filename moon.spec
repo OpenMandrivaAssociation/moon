@@ -1,5 +1,5 @@
 %define name moon
-%define version 0.6
+%define version 0.7
 %define release %mkrel 1
 %define major 0
 %define libname %mklibname %name %major
@@ -61,8 +61,11 @@ Adobe Flash.
 autoconf
 
 %build
-export CPPFLAGS="-I%_includedir/libswscale"
-%configure2_5x --with-mono=no --with-ff2=yes --with-swscale=yes \
+%define _disable_ld_no_undefined 1
+#export CPPFLAGS="-I%_includedir/libswscale"
+#--with-swscale=yes \
+
+%configure2_5x --with-ff2=yes \
 %if %mdvver >= 200900
   --with-cairo=system \
 %endif
