@@ -1,6 +1,6 @@
 %define name moon
 %define version 0.7
-%define release %mkrel 1
+%define release %mkrel 2
 %define major 0
 %define libname %mklibname %name %major
 %define develname %mklibname -d %name
@@ -11,6 +11,7 @@ Version: %{version}
 Release: %{release}
 Source0: %{name}-%{version}.tar.bz2
 Patch: moon-0.6-expat.patch
+Patch1: moon-0.7-fix-linking.patch
 License: LGPLv2
 Group: System/Libraries
 Url: http://www.mono-project.com/Moonlight
@@ -58,10 +59,12 @@ Adobe Flash.
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1 -b .fix-linking
+aclocal -I pixman -I cairo
 autoconf
+automake
 
 %build
-%define _disable_ld_no_undefined 1
 #export CPPFLAGS="-I%_includedir/libswscale"
 #--with-swscale=yes \
 
