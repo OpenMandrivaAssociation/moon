@@ -1,6 +1,6 @@
 %define name moon
-%define version 0.7
-%define release %mkrel 2
+%define version 0.8
+%define release %mkrel 1
 %define major 0
 %define libname %mklibname %name %major
 %define develname %mklibname -d %name
@@ -10,7 +10,7 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: %{name}-%{version}.tar.bz2
-Patch: moon-0.6-expat.patch
+Patch: moon-0.8-expat.patch
 Patch1: moon-0.7-fix-linking.patch
 License: LGPLv2
 Group: System/Libraries
@@ -21,14 +21,16 @@ BuildRequires: libxtst-devel
 BuildRequires: libxrandr-devel
 %if %mdvver >= 200900
 BuildRequires: libcairo-devel >= 1.6
+BuildRequires: xulrunner-devel-unstable
+%else
+BuildRequires: libmozilla-firefox-devel
 %endif
 BuildRequires: libgtk+2.0-devel
-BuildRequires: libmozilla-firefox-devel
 BuildRequires: libmagick-devel
 BuildRequires: dbus-glib-devel
 BuildRequires: libalsa-devel
-#BuildRequires: mono-devel > 1.9.1
-#BuildRequires: ndesk-dbus gnome-desktop-sharp-devel
+BuildRequires: mono-devel
+BuildRequires: ndesk-dbus gnome-desktop-sharp-devel
 
 %description
 Moonlight is an open source implementation of Microsoft Silverlight
@@ -68,8 +70,13 @@ automake
 #export CPPFLAGS="-I%_includedir/libswscale"
 #--with-swscale=yes \
 
-%configure2_5x --with-ff2=yes \
-%if %mdvver >= 200900
+#gw tests don't build
+%define _disable_ld_no_undefined 1
+%configure2_5x \
+%if %mdvver < 200900
+--with-ff2=yes \
+%else
+  --with-ff3=yes \
   --with-cairo=system \
 %endif
 
@@ -95,9 +102,12 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %doc README TODO
+%_bindir/agviewer
 %_bindir/mopen1
 %_libdir/moon
 %_libdir/mozilla/plugins/libmoon*
+#gw TODO: put somewhere else
+%_libdir/libshocker.so
 
 %files -n %libname
 %defattr(-,root,root)
@@ -106,7 +116,7 @@ rm -rf %{buildroot}
 %files -n %develname
 %defattr(-,root,root)
 %_libdir/libmoon.so
-%_libdir/libmoon.la
+%_libdir/*.la
 %_libdir/pkgconfig/moon.pc
 %_includedir/libmoon
 
