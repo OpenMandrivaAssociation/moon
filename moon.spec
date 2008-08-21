@@ -107,12 +107,14 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %doc README TODO
-%_bindir/agviewer
 %_bindir/mopen1
 %_libdir/moon
 %_libdir/mozilla/plugins/libmoon*
+%if %mdvver >= 200900
+%_bindir/agviewer
 #gw TODO: put somewhere else
 %_libdir/libshocker.so
+%endif
 
 %files -n %libname
 %defattr(-,root,root)
