@@ -30,7 +30,12 @@ BuildRequires: libmagick-devel
 BuildRequires: dbus-glib-devel
 BuildRequires: libalsa-devel
 BuildRequires: mono-devel
-BuildRequires: ndesk-dbus gnome-desktop-sharp-devel
+BuildRequires: ndesk-dbus 
+%if %mdvver >= 200900
+BuildRequires: gnome-desktop-sharp-devel
+%else
+BuildRequires: gnome-desktop-sharp
+%endif
 
 %description
 Moonlight is an open source implementation of Microsoft Silverlight
