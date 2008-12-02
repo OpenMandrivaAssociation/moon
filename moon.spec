@@ -1,6 +1,7 @@
 %define name moon
-%define version 0.8
-%define release %mkrel 3
+%define version 1.0
+%define betaver b1
+%define release %mkrel -c %betaver 1
 %define major 0
 %define libname %mklibname %name %major
 %define develname %mklibname -d %name
@@ -9,10 +10,8 @@ Summary: Open Source implementation of Silverlight
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source0: %{name}-%{version}.tar.bz2
-Patch: moon-0.8-expat.patch
-Patch1: moon-0.7-fix-linking.patch
-Patch2: moon-0.8-new-ffmpeg.patch
+Source0: http://ftp.novell.com/pub/mono/sources/moon/%name-%{version}%{betaver}.tar.bz2
+Patch1: moon-1.0-fix-linkage.patch
 License: LGPLv2
 Group: System/Libraries
 Url: http://www.mono-project.com/Moonlight
@@ -65,23 +64,14 @@ Adobe Flash.
 
 
 %prep
-%setup -q
-%patch -p1
-%patch1 -p1 -b .fix-linking
-%patch2 -p1
-aclocal -I pixman -I cairo
-autoconf
-automake
+%setup -q -n %name-%{version}%{betaver}
+%patch1 -p0 -b .fix-linking
 
 %build
-#export CPPFLAGS="-I%_includedir/libswscale"
-#--with-swscale=yes \
-
-#gw tests don't build
-%define _disable_ld_no_undefined 1
+autoreconf
 %configure2_5x \
 %if %mdvver < 200900
---with-ff2=yes \
+  --with-ff2=yes \
 %else
   --with-ff3=yes \
   --with-cairo=system \
@@ -126,6 +116,3 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %_libdir/libmoon.so
 %_libdir/*.la
-%_libdir/pkgconfig/moon.pc
-%_includedir/libmoon
-
