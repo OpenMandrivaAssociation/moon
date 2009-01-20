@@ -1,7 +1,6 @@
 %define name moon
 %define version 1.0
-%define betaver b1
-%define release %mkrel -c %betaver 1
+%define release %mkrel 1
 %define major 0
 %define libname %mklibname %name %major
 %define develname %mklibname -d %name
@@ -10,7 +9,8 @@ Summary: Open Source implementation of Silverlight
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source0: http://ftp.novell.com/pub/mono/sources/moon/%name-%{version}%{betaver}.tar.bz2
+Source0: http://ftp.novell.com/pub/mono/sources/moon/%name-%{version}.tar.bz2
+Patch: moon-1.0-format-strings.patch
 Patch1: moon-1.0-fix-linkage.patch
 License: LGPLv2
 Group: System/Libraries
@@ -29,6 +29,7 @@ BuildRequires: libgtk+2.0-devel
 BuildRequires: libmagick-devel
 BuildRequires: dbus-glib-devel
 BuildRequires: libalsa-devel
+BuildRequires: libpulseaudio-devel
 BuildRequires: mono-devel
 BuildRequires: ndesk-dbus 
 %if %mdvver >= 200900
@@ -64,7 +65,8 @@ Adobe Flash.
 
 
 %prep
-%setup -q -n %name-%{version}%{betaver}
+%setup -q
+%patch -p1
 %patch1 -p0 -b .fix-linking
 
 %build
