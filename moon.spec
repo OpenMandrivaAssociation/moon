@@ -1,6 +1,6 @@
 %define name moon
 %define version 1.0
-%define release %mkrel 1
+%define release %mkrel 2
 %define major 0
 %define libname %mklibname %name %major
 %define develname %mklibname -d %name
@@ -68,9 +68,9 @@ Adobe Flash.
 %setup -q
 %patch -p1
 %patch1 -p0 -b .fix-linking
+autoreconf -fi
 
 %build
-autoreconf
 %configure2_5x \
 %if %mdvver < 200900
   --with-ff2=yes \
