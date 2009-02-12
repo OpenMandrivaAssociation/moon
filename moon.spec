@@ -1,6 +1,6 @@
 %define name moon
 %define version 1.0
-%define release %mkrel 2
+%define release %mkrel 3
 %define major 0
 %define libname %mklibname %name %major
 %define develname %mklibname -d %name
@@ -85,7 +85,7 @@ autoreconf -fi
 rm -rf %{buildroot}
 %makeinstall_std 
 mkdir -p %buildroot%_libdir/mozilla/plugins
-mv %buildroot%_libdir/moon/plugin/libmoonloader* %buildroot%_libdir/mozilla/plugins
+ln -s %_libdir/moon/plugin/libmoonloader.so %buildroot%_libdir/mozilla/plugins
 rm -f %buildroot%_libdir/moon/plugin/README
 
 %clean
