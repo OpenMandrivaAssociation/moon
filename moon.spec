@@ -37,6 +37,7 @@ BuildRequires: gnome-desktop-sharp-devel
 %else
 BuildRequires: gnome-desktop-sharp
 %endif
+Requires: %libname >= %version
 
 %description
 Moonlight is an open source implementation of Microsoft Silverlight
