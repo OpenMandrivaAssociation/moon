@@ -1,6 +1,6 @@
 %define name moon
 %define version 1.0.1
-%define release %mkrel 2
+%define release %mkrel 3
 %define major 0
 %define libname %mklibname %name %major
 %define develname %mklibname -d %name
@@ -10,6 +10,8 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: http://ftp.novell.com/pub/mono/sources/moon/%name-%{version}.tar.bz2
+#gw from mozilla:
+Source1: npupp.h
 Patch: moon-1.0-format-strings.patch
 Patch1: moon-1.0-fix-linkage.patch
 License: LGPLv2
@@ -19,11 +21,15 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: ffmpeg-devel
 BuildRequires: libxtst-devel
 BuildRequires: libxrandr-devel
+%if %mdvver >= 201000
+BuildRequires: xulrunner-devel
+%else
 %if %mdvver >= 200900
 BuildRequires: libcairo-devel >= 1.6
 BuildRequires: xulrunner-devel-unstable
 %else
 BuildRequires: libmozilla-firefox-devel
+%endif
 %endif
 BuildRequires: libgtk+2.0-devel
 BuildRequires: libmagick-devel
@@ -70,7 +76,7 @@ Adobe Flash.
 %patch -p1
 %patch1 -p0 -b .fix-linking
 autoreconf -fi
-
+cp %SOURCE1 test/harness/shocker/
 %build
 %configure2_5x \
 %if %mdvver < 200900
