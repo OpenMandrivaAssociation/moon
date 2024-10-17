@@ -22,7 +22,7 @@ Patch5: mono-2.0-fix-linking.patch
 Patch8: mono-2.6-format-strings.patch
 License: LGPLv2
 Group: System/Libraries
-Url: http://www.mono-project.com/Moonlight
+Url: https://www.mono-project.com/Moonlight
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: ffmpeg-devel
 BuildRequires: libxtst-devel
